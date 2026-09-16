@@ -1,86 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="WeatherScope — a responsive weather dashboard using OpenWeatherMap.">
-  <meta name="author" content="Sachin Yadav">
-  <title>WeatherScope — Live Weather</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WeatherScope</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="noise" aria-hidden="true"></div>
-  <header class="nav">
-    <a class="logo" href="#" aria-label="WeatherScope home"><span class="logo-mark">W</span><span>Weather<span>Scope</span></span></a>
-    <div class="nav-note"><span class="live-dot"></span> Live weather</div>
-  </header>
+<main class="container">
+<section class="hero">
+<p class="eyebrow">LIVE WEATHER</p>
+<h1>WeatherScope</h1>
+<p class="subtitle">Check current weather conditions for any city.</p>
+<div class="search-box">
+<form id="weatherForm">
+<input id="cityInput" type="text" placeholder="Enter city name..." autocomplete="off" required>
+<button id="searchBtn" type="submit">Check Weather</button>
+</form>
+</div>
+<div class="popular">
+<span>Popular:</span>
+<button type="button" data-city="Jaipur">Jaipur</button>
+<button type="button" data-city="Delhi">Delhi</button>
+<button type="button" data-city="Mumbai">Mumbai</button>
+<button type="button" data-city="London">London</button>
+</div>
+</section>
 
-  <main class="shell">
-    <section class="intro">
-      <div class="intro-copy">
-        <p class="label">WEEK 03 · WEATHER APP</p>
-        <h1>See what the<br><em>sky is doing.</em></h1>
-        <p class="lead">Search a city for current temperature, conditions, humidity, wind and more — powered by live weather data.</p>
-      </div>
-      <div class="sun-orbit" aria-hidden="true"><span></span></div>
-    </section>
+<p id="status" class="status"></p>
 
-    <section class="search-panel">
-      <form id="weatherForm" class="search-form">
-        <label class="sr-only" for="cityInput">City name</label>
-        <span class="pin">⌖</span>
-        <input id="cityInput" type="text" placeholder="Search city, e.g. Jaipur" autocomplete="off" maxlength="80" required>
-        <button id="searchBtn" type="submit">Check weather <span>↗</span></button>
-      </form>
-      <div class="popular"><span>Popular:</span>
-        <button type="button" data-city="Jaipur">Jaipur</button>
-        <button type="button" data-city="Delhi">Delhi</button>
-        <button type="button" data-city="Mumbai">Mumbai</button>
-        <button type="button" data-city="London">London</button>
-      </div>
-    </section>
+<section id="weatherCard" class="weather-card hidden">
+<div class="weather-top">
+<div>
+<p class="label">CURRENT WEATHER</p>
+<h2 id="location">—</h2>
+<p id="condition">—</p>
+</div>
+<img id="weatherIcon" src="" alt="Weather icon" hidden>
+</div>
+<div class="temperature"><span id="temperature">—</span><sup>°C</sup></div>
+<p class="feels">Feels like <strong id="feelsLike">—</strong>°C</p>
+<div class="details">
+<div class="detail"><span>Humidity</span><strong id="humidity">—</strong></div>
+<div class="detail"><span>Wind</span><strong id="wind">—</strong></div>
+<div class="detail"><span>Pressure</span><strong id="pressure">—</strong></div>
+<div class="detail"><span>Visibility</span><strong id="visibility">—</strong></div>
+</div>
+<div class="footer-info">
+<span id="coordinates">—</span>
+<span id="updated">—</span>
+</div>
+</section>
 
-    <div class="status" id="status" aria-live="polite"><span class="status-light"></span><span id="statusText">Search a city to see live weather.</span></div>
-
-    <section class="weather-layout" id="weatherCard" aria-live="polite">
-      <article class="main-weather">
-        <div class="weather-heading">
-          <div>
-            <p class="mini">CURRENT CONDITIONS</p>
-            <h2 id="location">—</h2>
-            <p id="condition" class="condition">—</p>
-          </div>
-          <img id="weatherIcon" class="weather-icon" src="" alt="" hidden>
-        </div>
-        <div class="temp-line"><strong id="temperature">—</strong><span>°C</span></div>
-        <p class="feels">Feels like <b id="feelsLike">—</b>°C</p>
-        <div class="weather-meta"><span id="updated">Updated —</span><span id="coordinates">Lat — · Lon —</span></div>
-      </article>
-
-      <aside class="details">
-        <div class="details-head"><span>Weather details</span><span>NOW</span></div>
-        <div class="detail-list">
-          <div class="detail"><span class="detail-symbol">💧</span><span><small>Humidity</small><b id="humidity">—</b></span></div>
-          <div class="detail"><span class="detail-symbol">↝</span><span><small>Wind speed</small><b id="wind">—</b></span></div>
-          <div class="detail"><span class="detail-symbol">⌁</span><span><small>Pressure</small><b id="pressure">—</b></span></div>
-          <div class="detail"><span class="detail-symbol">◉</span><span><small>Visibility</small><b id="visibility">—</b></span></div>
-        </div>
-      </aside>
-    </section>
-
-    <section class="empty" id="emptyState">
-      <div class="empty-mark">☼</div>
-      <div><h2>Your forecast starts here.</h2><p>Enter a city above. The app requests current weather through a server-side API route, so visitors never need to enter an API key.</p></div>
-    </section>
-
-    <footer class="footer">
-      <span>WeatherScope · HTML5 · CSS3 · JavaScript · Fetch API · JSON</span>
-      <span>OpenWeatherMap data</span>
-    </footer>
-  </main>
-  <script src="script.js"></script>
+<section id="emptyState" class="empty">
+<div class="empty-icon">☁</div>
+<h2>Search for a city</h2>
+<p>Enter a city above to see its current weather.</p>
+</section>
+</main>
+<script src="script.js"></script>
 </body>
 </html>

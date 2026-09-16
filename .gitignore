@@ -1,7 +1,4 @@
 .env
 .env.*
 !.env.example
-.vscode/
-.idea/
-.DS_Store
 node_modules/
