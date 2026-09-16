@@ -1,63 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WeatherScope</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CityByteHub Weather Intelligence — live weather, rain probability, location hierarchy and smart alerts.">
+  <title>CityByteHub Weather Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main class="container">
-<section class="hero">
-<p class="eyebrow">LIVE WEATHER</p>
-<h1>WeatherScope</h1>
-<p class="subtitle">Check current weather conditions for any city.</p>
-<div class="search-box">
-<form id="weatherForm">
-<input id="cityInput" type="text" placeholder="Enter city name..." autocomplete="off" required>
-<button id="searchBtn" type="submit">Check Weather</button>
-</form>
-</div>
-<div class="popular">
-<span>Popular:</span>
-<button type="button" data-city="Jaipur">Jaipur</button>
-<button type="button" data-city="Delhi">Delhi</button>
-<button type="button" data-city="Mumbai">Mumbai</button>
-<button type="button" data-city="London">London</button>
-</div>
-</section>
+  <div class="bg-orb orb-one" aria-hidden="true"></div>
+  <div class="bg-orb orb-two" aria-hidden="true"></div>
+  <header class="nav">
+    <a class="logo" href="#" aria-label="CityByteHub Weather home">
+      <span class="logo-mark">CB</span>
+      <span>CityByteHub <small>WEATHER</small></span>
+    </a>
+    <div class="nav-note"><span class="live-dot"></span> LIVE WEATHER INTELLIGENCE</div>
+  </header>
 
-<p id="status" class="status"></p>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="label">CITYBYTEHUB · WEATHER INTELLIGENCE</p>
+        <h1>Weather,<br><em>understood.</em></h1>
+        <p class="lead">Search a country, state, district, city, village or address. We combine live conditions, forecast rain chances and location details into one clear view.</p>
+      </div>
+      <div class="weather-orbit" aria-hidden="true"><span></span><i></i></div>
+    </section>
 
-<section id="weatherCard" class="weather-card hidden">
-<div class="weather-top">
-<div>
-<p class="label">CURRENT WEATHER</p>
-<h2 id="location">—</h2>
-<p id="condition">—</p>
-</div>
-<img id="weatherIcon" src="" alt="Weather icon" hidden>
-</div>
-<div class="temperature"><span id="temperature">—</span><sup>°C</sup></div>
-<p class="feels">Feels like <strong id="feelsLike">—</strong>°C</p>
-<div class="details">
-<div class="detail"><span>Humidity</span><strong id="humidity">—</strong></div>
-<div class="detail"><span>Wind</span><strong id="wind">—</strong></div>
-<div class="detail"><span>Pressure</span><strong id="pressure">—</strong></div>
-<div class="detail"><span>Visibility</span><strong id="visibility">—</strong></div>
-</div>
-<div class="footer-info">
-<span id="coordinates">—</span>
-<span id="updated">—</span>
-</div>
-</section>
+    <section class="search-panel">
+      <form id="weatherForm" class="search-form">
+        <span class="pin">⌖</span>
+        <div class="input-wrap">
+          <label class="sr-only" for="locationInput">Location or address</label>
+          <input id="locationInput" type="text" placeholder="Search city, village, district, state or full address…" autocomplete="off" maxlength="120" required>
+          <div id="suggestions" class="suggestions" role="listbox" aria-label="Location suggestions"></div>
+        </div>
+        <button id="searchBtn" type="submit">Analyze weather <span>↗</span></button>
+      </form>
+      <div class="popular"><span>Try:</span>
+        <button type="button" data-query="Jaipur">Jaipur</button>
+        <button type="button" data-query="Delhi">Delhi</button>
+        <button type="button" data-query="Mumbai">Mumbai</button>
+        <button type="button" data-query="London">London</button>
+        <button type="button" data-query="Chomu, Rajasthan, India">Chomu, Rajasthan</button>
+      </div>
+    </section>
 
-<section id="emptyState" class="empty">
-<div class="empty-icon">☁</div>
-<h2>Search for a city</h2>
-<p>Enter a city above to see its current weather.</p>
-</section>
-</main>
-<script src="script.js"></script>
+    <div class="status" id="status" aria-live="polite"><span class="status-light"></span><span id="statusText">Type a location to get smart weather analysis.</span></div>
+
+    <section class="weather-layout" id="weatherCard" aria-live="polite">
+      <article class="main-weather">
+        <div class="weather-heading">
+          <div>
+            <p class="mini">CURRENT CONDITIONS</p>
+            <h2 id="location">—</h2>
+            <p id="condition" class="condition">—</p>
+            <div id="addressLine" class="address-line">—</div>
+          </div>
+          <img id="weatherIcon" class="weather-icon" src="" alt="" hidden>
+        </div>
+        <div class="temp-line"><strong id="temperature">—</strong><span>°C</span></div>
+        <p class="feels">Feels like <b id="feelsLike">—</b>°C · <span id="tempSummary">Analyzing…</span></p>
+        <div class="weather-meta"><span id="updated">Updated —</span><span id="coordinates">Lat — · Lon —</span></div>
+      </article>
+
+      <aside class="details">
+        <div class="details-head"><span>LIVE DETAILS</span><span id="weatherTime">NOW</span></div>
+        <div class="detail-list">
+          <div class="detail"><span class="detail-symbol">💧</span><span><small>Humidity</small><b id="humidity">—</b></span></div>
+          <div class="detail"><span class="detail-symbol">↝</span><span><small>Wind speed</small><b id="wind">—</b></span></div>
+          <div class="detail"><span class="detail-symbol">⌁</span><span><small>Pressure</small><b id="pressure">—</b></span></div>
+          <div class="detail"><span class="detail-symbol">◉</span><span><small>Visibility</small><b id="visibility">—</b></span></div>
+          <div class="detail"><span class="detail-symbol">☁</span><span><small>Cloud cover</small><b id="clouds">—</b></span></div>
+          <div class="detail"><span class="detail-symbol">☀</span><span><small>Sunrise / Sunset</small><b id="sunTimes">—</b></span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="location-card" id="locationCard" hidden>
+      <div class="section-title"><div><p class="mini">LOCATION CONTEXT</p><h2>Where is this place?</h2></div><span class="verified-chip">GEO DATA</span></div>
+      <div class="location-grid">
+        <div><small>Address / Place</small><strong id="addressFull">—</strong></div>
+        <div><small>Village / Locality</small><strong id="villageName">—</strong></div>
+        <div><small>District</small><strong id="districtName">—</strong></div>
+        <div><small>City / Town</small><strong id="cityName">—</strong></div>
+        <div><small>State / Region</small><strong id="stateName">—</strong></div>
+        <div><small>Country</small><strong id="countryName">—</strong></div>
+      </div>
+    </section>
+
+    <section class="rain-card" id="rainCard" hidden>
+      <div class="section-title"><div><p class="mini">PRECIPITATION OUTLOOK</p><h2>Rain chances & expected timing</h2></div><span id="rainBadge" class="rain-badge">Analyzing</span></div>
+      <div class="rain-summary">
+        <div class="rain-main"><strong id="rainChance">—</strong><span>peak rain chance</span></div>
+        <div><small>Expected window</small><strong id="rainWindow">—</strong></div>
+        <div><small>Expected amount</small><strong id="rainAmount">—</strong></div>
+      </div>
+      <div id="rainTimeline" class="rain-timeline"></div>
+    </section>
+
+    <section class="alerts-card" id="alertsCard" hidden>
+      <div class="section-title"><div><p class="mini">AUTO ANALYSIS</p><h2>Weather alerts</h2></div><span class="smart-chip">SMART</span></div>
+      <div id="alertsList" class="alerts-list"></div>
+    </section>
+
+    <section class="forecast-card" id="forecastCard" hidden>
+      <div class="section-title"><div><p class="mini">FORECAST SNAPSHOT</p><h2>Next weather changes</h2></div><span class="smart-chip">5 DAYS</span></div>
+      <div id="forecastGrid" class="forecast-grid"></div>
+    </section>
+
+    <section class="trust-note">
+      <div class="trust-icon">✓</div>
+      <div><strong>Live-data note</strong><p>Weather is calculated from live OpenWeather data plus geocoding information. Forecasts are estimates, not guarantees. For severe weather or important decisions, cross-check with your national or local meteorological authority.</p></div>
+    </section>
+
+    <section class="empty" id="emptyState">
+      <div class="empty-mark">☼</div>
+      <div><h2>Your weather intelligence starts here.</h2><p>Type any supported place or address. Suggestions appear as you type, then we’ll map the location and analyze the weather.</p></div>
+    </section>
+
+    <footer class="footer">
+      <div><strong>CITYBYTEHUB</strong> <span>Weather Intelligence</span></div>
+      <span>HTML5 · CSS3 · JavaScript · OpenWeather data</span>
+    </footer>
+  </main>
+  <script src="script.js"></script>
 </body>
 </html>
