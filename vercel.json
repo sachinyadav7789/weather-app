@@ -1,7 +1,3 @@
 {
-  "functions": {
-    "api/weather.js": {
-      "runtime": "nodejs20.x"
-    }
-  }
+  "$schema": "https://openapi.vercel.sh/vercel.json"
 }
